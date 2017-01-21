@@ -56,8 +56,11 @@ class NoHistory(object):
 def worker(itemid):
     br = getBrowers()
     time.sleep(random.randint(3, 6))
-    itemout = br.open("https://weidian.com/item.html?itemID="+itemid)
-    itemout.read()
+    try:
+        itemout = br.open("https://weidian.com/item.html?itemID="+itemid)
+        itemout.read()
+    except Exception as e:
+        pass
     return
 
 
@@ -94,17 +97,20 @@ def getItems(html):
 def getShops():
     #Browser
     br = getBrowers()
-    r = br.open("http://weidian.com/?userid="+USER_ID)
-    html = r.read()
-    data = getItems(html)
-    pool = multiprocessing.Pool(processes = 8)
-    for i in data.get("result").get("template_Info")[3].get("proxy_linkinfo"):
-        if i.get("is_delete") != "0":
-            continue
-        itemid = i.get("itemID")
-        pool.apply_async(worker, (itemid, ))
-    pool.close()
-    pool.join()
+    try:
+        r = br.open("http://weidian.com/?userid="+USER_ID)
+        html = r.read()
+        data = getItems(html)
+        pool = multiprocessing.Pool(processes = 8)
+        for i in data.get("result").get("template_Info")[3].get("proxy_linkinfo"):
+            if i.get("is_delete") != "0":
+                continue
+            itemid = i.get("itemID")
+            pool.apply_async(worker, (itemid, ))
+        pool.close()
+        pool.join()
+    except Exception as e:
+        print e
     
 if __name__ == "__main__":
     multiprocessing.freeze_support()
