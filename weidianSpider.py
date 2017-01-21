@@ -101,7 +101,7 @@ def getShops():
         r = br.open("http://weidian.com/?userid="+USER_ID)
         html = r.read()
         data = getItems(html)
-        pool = multiprocessing.Pool(processes = 8)
+        pool = multiprocessing.Pool(processes = multiprocessing.cpu_count())
         for i in data.get("result").get("template_Info")[3].get("proxy_linkinfo"):
             if i.get("is_delete") != "0":
                 continue
@@ -119,7 +119,7 @@ if __name__ == "__main__":
         print "Start visit My Bear's WeiShop..."
         getShops()
         sleep_time = random.randint(35,60)
-        print "Let's watting "+str(sleep_time)+" seconds..."
+        print "Let's waiting "+str(sleep_time)+" seconds..."
         print ""
         print ""
         time.sleep(sleep_time)
