@@ -115,7 +115,7 @@ def getShops():
 if __name__ == "__main__":
     multiprocessing.freeze_support()
     while True:
-        print time.strftime('%Y-%m-%d %X', time.gmtime( time.time() ) )
+        print time.strftime("%Y-%m-%d %H:%M:%S")
         print "Start visit My Bear's WeiShop..."
         getShops()
         sleep_time = random.randint(35,60)
