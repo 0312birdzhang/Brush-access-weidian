@@ -10,7 +10,7 @@ python.exe pyinstaller.py --onefile --icon=D:\我的文档\workspaces\icon.ico  
 
 ##TODO
 
-- [ ] 动态更改UA
+- [x] 动态更改UA
 
 - [ ] IP代理配置文件
 
